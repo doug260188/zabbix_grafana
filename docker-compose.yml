@@ -81,8 +81,8 @@ services:
       - MYSQL_DATABASE=zabbix
       - MYSQL_USER=zabbix
       - MYSQL_PASSWORD=391537
-      - PHP_TZ=America/Sao_Paulo
-      - ZBX_SERVER_NAME=Zabbix sgoncalves
+      - PHP_TZ=America/Cuiaba
+      - ZBX_SERVER_NAME=Zabbix-server
       - ZBX_SERVER_HOST=zabbix-server
     depends_on:
       - mysql
