@@ -45,7 +45,7 @@ services:
   zabbix-server:
     container_name: zabbix-server
     hostname: zabbix-server
-    image: zabbix/zabbix-server-mysql:latest
+    image: zabbix/zabbix-server-mysql:alpine-trunk
     networks:
       - network-zabbix
     links:
