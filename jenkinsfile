@@ -1,2 +1,18 @@
-pipeline
+pipeline {
     agent any
+
+    stages {
+        stage('Build Image') {
+            steps {
+                script {
+                    //Baixando dockerfile
+                    sh 'wget https://github.com/doug260188/project_esus/blob/master/dockerfile'
+
+                    //Construindo imagem
+                    sh 'docker build -t doug260188/ubuntu:latest .'
+                    sh ' rm dockerfile*'
+                }
+            }
+        }
+    }
+}              

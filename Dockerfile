@@ -1,0 +1,131 @@
+version: '3.7'
+services:
+  mysql:
+    container_name: mysql
+    hostname: mysql
+    image: mysql:8.0    #8.0 testar novamente
+    networks:
+      - network-zabbix
+    ports:
+      - '3306:3306'
+    volumes:
+      - zabbix-var-lib-data:/var/lib/data
+      - zabbix-var-lib-mysql:/var/lib/mysql
+    command: ['mysqld', '--character-set-server=utf8', '--collation-server=utf8_bin', '--default-authentication-plugin=mysql_native_password']
+    environment:
+      - MYSQL_ROOT_PASSWORD=391537
+      - MYSQL_DATABASE=zabbix
+      - MYSQL_USER=zabbix
+      - MYSQL_PASSWORD=391537
+    cap_add:
+      - SYS_NICE  # CAP_SYS_NICE
+  
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: phpmyadmin
+    networks:
+     - network-zabbix
+    links:
+     - mysql 
+    restart: always
+    ports:
+     - 8090:80
+    volumes:
+     - /sessions
+    environment:
+     - PMA_ARBITRARY=1
+     - DB_SERVER_HOST=mysql
+     - MYSQL_DATABASE=zabbix
+     - MYSQL_USER=zabbix
+     - MYSQL_PASSWORD=391537
+    depends_on:
+      - mysql
+
+
+  zabbix-server:
+    container_name: zabbix-server
+    hostname: zabbix-server
+    image: zabbix/zabbix-server-mysql:latest
+    networks:
+      - network-zabbix
+    links:
+      - mysql
+    restart: always
+    ports:
+      - '10051:10051'
+    volumes:
+      - zabbix-alertscripts:/usr/lib/zabbix/alertscripts
+    environment:
+      - DB_SERVER_HOST=mysql
+      - MYSQL_DATABASE=zabbix
+      - MYSQL_USER=zabbix
+      - MYSQL_PASSWORD=391537
+    depends_on:
+      - mysql
+
+  zabbix-frontend:
+    container_name: zabbix-frontend
+    hostname: zabbix-frontend
+    image: zabbix/zabbix-web-apache-mysql:latest
+    networks:
+      - network-zabbix
+    links:
+      - mysql
+      - zabbix-server
+    restart: always
+    ports:
+      - '8082:8080'
+      - '8443:8443'
+    environment:
+      - DB_SERVER_HOST=mysql
+      - MYSQL_DATABASE=zabbix
+      - MYSQL_USER=zabbix
+      - MYSQL_PASSWORD=391537
+      - PHP_TZ=America/Sao_Paulo
+      - ZBX_SERVER_NAME=Zabbix sgoncalves
+      - ZBX_SERVER_HOST=zabbix-server
+    depends_on:
+      - mysql
+  grafana:
+    container_name: grafana
+    image: grafana/grafana
+    networks:
+      - network-zabbix
+    links:
+      - mysql
+      - zabbix-server
+    restart: always
+    ports:
+      - '3000:3000'
+    environment: 
+      - GF_INSTALL_PLUGINS=zabbix-app
+    depends_on:
+      - mysql
+      - zabbix-server
+
+  zabbix-agent:
+    container_name: zabbix-agent
+    hostname: zabbix-agent
+    image: zabbix/zabbix-agent2:latest
+    user: root
+    networks:
+      - network-zabbix
+    links:
+      - zabbix-server
+    restart: always
+    privileged: true
+    volumes:
+      - /var/run:/var/run
+    ports:
+      - '10050:10050'
+    environment:
+      - ZBX_HOSTNAME=SRVZABBIX
+      - ZBX_SERVER_HOST=zabbix-server
+
+networks:
+  network-zabbix:
+    driver: bridge
+volumes:
+  zabbix-var-lib-data:
+  zabbix-var-lib-mysql:
+  zabbix-alertscripts:
