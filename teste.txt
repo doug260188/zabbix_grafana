@@ -3,7 +3,7 @@ services:
   mysql:
     container_name: mysql
     hostname: mysql
-    image: mysql:8.0
+    image: mysql:8.0    #8.0 testar novamente
     networks:
       - network-zabbix
     ports:
@@ -19,7 +19,7 @@ services:
       - MYSQL_PASSWORD=391537
     cap_add:
       - SYS_NICE  # CAP_SYS_NICE
-
+  
   phpmyadmin:
     image: phpmyadmin
     container_name: phpmyadmin
@@ -41,6 +41,7 @@ services:
     depends_on:
       - mysql
 
+
   zabbix-server:
     container_name: zabbix-server
     hostname: zabbix-server
@@ -54,7 +55,6 @@ services:
       - '10051:10051'
     volumes:
       - zabbix-alertscripts:/usr/lib/zabbix/alertscripts
-      - ./zabbix_server.conf:/etc/zabbix/zabbix_server.conf   # Adicionado
     environment:
       - DB_SERVER_HOST=mysql
       - MYSQL_DATABASE=zabbix
@@ -86,7 +86,6 @@ services:
       - ZBX_SERVER_HOST=zabbix-server
     depends_on:
       - mysql
-
   grafana:
     container_name: grafana
     image: grafana/grafana
@@ -121,14 +120,11 @@ services:
       - '10050:10050'
     environment:
       - ZBX_HOSTNAME=SRVZABBIX
-      - ZBX_SERVER_HOST=zabbix-server
-    depends_on:
-      - zabbix-server
+      - ZBX_SERVER_HOST=zabbix-server-
 
 networks:
   network-zabbix:
     driver: bridge
-
 volumes:
   zabbix-var-lib-data:
   zabbix-var-lib-mysql:
