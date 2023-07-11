@@ -10,7 +10,7 @@ pipeline {
 
                     //Construindo imagem
                     sh 'docker build -t doug260188/ubuntu:latest .'
-                    sh ' rm dockerfile*'
+                    sh ' rm Dockerfile*'
                 }
             }
         
