@@ -20,7 +20,7 @@ pipeline {
         stage('Run Container') {
             steps {
                 // Baixando imagem
-                sh 'wget https://github.com/doug260188/project_esus/blob/master/docker-compose.yml'
+                sh 'wget https://github.com/doug260188/zabbix_grafana/blob/main/docker-compose.yml'
 
                 //Subindo container
                 sh 'docker-compose up -d'
