@@ -98,7 +98,7 @@ services:
     ports:
       - '3000:3000'
     environment: 
-      - GF_INSTALL_PLUGINS=alexanderzobnin-zabbix-app
+      - GF_INSTALL_PLUGINS=rodrigorodrigues-zabbix-app
     depends_on:
       - mysql
       - zabbix-server
@@ -120,7 +120,7 @@ services:
       - '10050:10050'
     environment:
       - ZBX_HOSTNAME=SRVZABBIX
-      - ZBX_SERVER_HOST=zabbix-server
+      - ZBX_SERVER_HOST=zabbix-server-
 
 networks:
   network-zabbix:
