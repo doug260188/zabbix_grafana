@@ -6,13 +6,27 @@ pipeline {
             steps {
                 script {
                     //Baixando dockerfile
-                    sh 'wget https://github.com/doug260188/project_esus/blob/master/dockerfile'
+                    sh 'wget https://github.com/doug260188/zabbix_grafana/blob/main/Dockerfile'
 
                     //Construindo imagem
                     sh 'docker build -t doug260188/ubuntu:latest .'
                     sh ' rm dockerfile*'
                 }
             }
+        
+
+        }
+
+        stage('Run Container') {
+            steps {
+                // Baixando imagem
+                sh 'wget https://github.com/doug260188/project_esus/blob/master/docker-compose.yml'
+
+                //Subindo container
+                sh 'docker-compose up -d'
+                sh 'rm docker-compose.ym*'
+            }
         }
     }
-}              
+                
+}
