@@ -18,7 +18,7 @@ services:
       - MYSQL_USER=zabbix
       - MYSQL_PASSWORD=391537
     cap_add:
-      - SYS_NICE   CAP_SYS_NICE
+      - SYS_NICE   #CAP_SYS_NICE
 
   phpmyadmin:
     image: phpmyadmin
