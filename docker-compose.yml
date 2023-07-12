@@ -44,7 +44,7 @@ services:
   zabbix-server:
     container_name: zabbix-server
     hostname: zabbix-server
-    image: zabbix/zabbix-server-mysql:latest
+    image: ubuntu:latest
     networks:
       - network-zabbix
     links:
