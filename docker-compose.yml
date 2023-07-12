@@ -54,7 +54,6 @@ services:
       - '10051:10051'
     volumes:
       - zabbix-alertscripts:/usr/lib/zabbix/alertscripts
-      - zabbix-server-conf:/etc/zabbix/zabbix_server.conf   # Adicionado
     environment:
       - DB_SERVER_HOST=mysql
       - MYSQL_DATABASE=zabbix
@@ -133,4 +132,3 @@ volumes:
   zabbix-var-lib-data:
   zabbix-var-lib-mysql:
   zabbix-alertscripts:
-  zabbix-server-conf:
