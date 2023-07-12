@@ -44,12 +44,12 @@ services:
   zabbix-server:
     container_name: zabbix-server
     hostname: zabbix-server
-    image: zabbix/zabbix-server-mysql:latest
+    image: zabbix/zabbix-server-mysql:6.4
     networks:
       - network-zabbix
     links:
       - mysql
-    #restart: always
+    restart: always
     depends_on:
       - mysql
     ports:
