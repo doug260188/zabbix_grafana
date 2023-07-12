@@ -3,7 +3,7 @@ services:
   mysql:
     container_name: mysql
     hostname: mysql
-    image: mysql:tag
+    image: mysql:latests
     networks:
       - network-zabbix
     ports:
