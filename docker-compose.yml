@@ -18,7 +18,7 @@ services:
       - MYSQL_USER=zabbix
       - MYSQL_PASSWORD=391537
     cap_add:
-      - SYS_NICE  # CAP_SYS_NICE
+      - SYS_NICE   CAP_SYS_NICE
 
   phpmyadmin:
     image: phpmyadmin
@@ -49,7 +49,9 @@ services:
       - network-zabbix
     links:
       - mysql
-    restart: always
+    #restart: always
+    depends_on:
+      - mysql
     ports:
       - '10051:10051'
     volumes:
@@ -60,8 +62,7 @@ services:
       - MYSQL_DATABASE=zabbix
       - MYSQL_USER=zabbix
       - MYSQL_PASSWORD=391537
-    depends_on:
-      - mysql
+    
 
   zabbix-frontend:
     container_name: zabbix-frontend
