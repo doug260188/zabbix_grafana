@@ -56,7 +56,7 @@ services:
       - zabbix-alertscripts:/usr/lib/zabbix/alertscripts
     environment:
       - DB_SERVER_HOST=mysql
-      DB_SERVER_PORT:3306
+      - DB_SERVER_PORT:3306
       - MYSQL_DATABASE=zabbix
       - MYSQL_USER=zabbix
       - MYSQL_PASSWORD=391537
