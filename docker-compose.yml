@@ -121,7 +121,7 @@ services:
     ports:
       - '10050:10050'
     environment:
-      - ZBX_HOSTNAME=SRVZABBIX
+      - ZBX_HOSTNAME=Zabbix-server
       - ZBX_SERVER_HOST=zabbix-server
     depends_on:
       - zabbix-server
