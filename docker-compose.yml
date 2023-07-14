@@ -60,7 +60,7 @@ services:
       - MYSQL_PASSWORD=391537
     depends_on:
       - mysql
-
+  
   zabbix-frontend:
     container_name: zabbix-frontend
     image: zabbix/zabbix-web-apache-mysql:ubuntu-5.0.1
