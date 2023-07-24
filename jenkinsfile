@@ -24,7 +24,7 @@ pipeline {
 
                 //Subindo container
                 sh 'docker-compose up -d'
-                sh 'rm docker-compose.ym*'
+                sh 'rm docker-compose*'
             }
         }
     }
